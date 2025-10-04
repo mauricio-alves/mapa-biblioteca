@@ -17,7 +17,8 @@ void carregarLivros(Livro livros[], int* totalLivros) {
                   livros[*totalLivros].editora,
                   &livros[*totalLivros].anoPublicacao,
                   &livros[*totalLivros].numExemplares,
-                  &livros[*totalLivros].exemplaresDisponiveis) == 7) {
+                  &livros[*totalLivros].exemplaresDisponiveis,
+                  livros[*totalLivros].status) == 8) {
         (*totalLivros)++;
     }
     fclose(arquivo);
@@ -38,7 +39,8 @@ void salvarLivros(const Livro livros[], int totalLivros) {
                 livros[i].editora,
                 livros[i].anoPublicacao,
                 livros[i].numExemplares,
-                livros[i].exemplaresDisponiveis);
+                livros[i].exemplaresDisponiveis,
+                livros[i].status);
     }
     fclose(arquivo);
 }

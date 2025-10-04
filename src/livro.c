@@ -42,6 +42,7 @@ void cadastrarLivro(Livro livros[], int* totalLivros) {
     scanf("%d", &novoLivro.numExemplares);
 
     novoLivro.exemplaresDisponiveis = novoLivro.numExemplares;
+    strcpy(novoLivro.status, "disponivel");
 
     livros[*totalLivros] = novoLivro;
     (*totalLivros)++;
@@ -124,7 +125,42 @@ void listarLivros(const Livro livros[], int totalLivros) {
         printf("Codigo: %d\n", livros[i].codigo);
         printf("Titulo: %s\n", livros[i].titulo);
         printf("Autor: %s\n", livros[i].autor);
+        printf("Status: %s\n", livros[i].status);
         printf("Disponiveis: %d de %d\n", livros[i].exemplaresDisponiveis, livros[i].numExemplares);
     }
     printf("----------------------------------\n");
+}
+
+// Pesquisa avançada de livros por múltiplos critérios
+void pesquisaAvancadaLivro(const Livro livros[], int totalLivros) {
+    char autorBusca[81];
+    int anoBusca = 0; 
+    int encontrados = 0;
+
+    printf("--- Busca Avancada de Livros ---\n");
+    printf("Deixe em branco (pressione Enter) para ignorar um criterio.\n\n");
+
+    printf("Digite o autor (ou parte do nome): ");
+    fgets(autorBusca, sizeof(autorBusca), stdin);
+    if (strchr(autorBusca, '\n') == NULL) while (getchar() != '\n');
+    autorBusca[strcspn(autorBusca, "\n")] = 0; 
+
+    printf("Digite o ano de publicacao (ou 0 para ignorar): ");
+    scanf("%d", &anoBusca);
+
+    printf("\n--- Resultados da Busca Avancada ---\n");
+    for (int i = 0; i < totalLivros; i++) {
+        int atendeAutor = (strlen(autorBusca) == 0) || (strstr(livros[i].autor, autorBusca) != NULL);
+        int atendeAno = (anoBusca == 0) || (livros[i].anoPublicacao == anoBusca);
+
+        if (atendeAutor && atendeAno) {
+            printf("Codigo: %d | Titulo: %s | Autor: %s | Ano: %d\n",
+                   livros[i].codigo, livros[i].titulo, livros[i].autor, livros[i].anoPublicacao);
+            encontrados++;
+        }
+    }
+
+    if (encontrados == 0) {
+        printf("Nenhum livro encontrado com os criterios informados.\n");
+    }
 }

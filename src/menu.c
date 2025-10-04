@@ -30,8 +30,9 @@ void menuGestaoLivros(Livro livros[], int* totalLivros) {
         limparTela();
         printf("--- Gestao de Livros ---\n");
         printf("1. Cadastrar Livro\n");
-        printf("2. Pesquisar Livro\n");
+        printf("2. Pesquisar Livro (simples)\n");
         printf("3. Listar todos os Livros\n");
+        printf("4. Busca Avancada\n");
         printf("0. Voltar ao Menu Principal\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
@@ -40,6 +41,7 @@ void menuGestaoLivros(Livro livros[], int* totalLivros) {
             case 1: cadastrarLivro(livros, totalLivros); break;
             case 2: pesquisarLivro(livros, *totalLivros); break;
             case 3: listarLivros(livros, *totalLivros); break;
+            case 4: pesquisaAvancadaLivro(livros, *totalLivros); break;
             case 0: return;
             default: printf("Opcao invalida!\n");
         }
@@ -104,12 +106,14 @@ void menuRelatorios(const Emprestimo emprestimos[], int totalEmprestimos, const 
         limparTela();
         printf("--- Menu de Relatorios ---\n");
         printf("1. Usuarios com Emprestimos em Atraso\n");
+        printf("2. Livros Mais Emprestados\n");
         printf("0. Voltar ao Menu Principal\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
 
         switch(opcao) {
             case 1: relatorioUsuariosComAtraso(emprestimos, totalEmprestimos, usuarios, totalUsuarios); break;
+            case 2: relatorioLivrosMaisEmprestados(emprestimos, totalEmprestimos, livros, totalLivros); break;
             case 0: return;
             default: printf("Opcao invalida!\n");
         }

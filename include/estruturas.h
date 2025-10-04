@@ -22,6 +22,7 @@ typedef struct {
     int anoPublicacao;
     int numExemplares;
     int exemplaresDisponiveis; 
+    char status[20];
 } Livro;
 
 // Estrutura para representar um Usuário (Requisito 2)
