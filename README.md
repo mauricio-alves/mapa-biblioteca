@@ -1,48 +1,58 @@
-# mapa-biblioteca
+# Atividade MAPA - Sistema de Gerenciamento de Biblioteca em C
 
-Manual do Usuário e Compilação
-Como Compilar e Executar (Usando Dev-C++):
-Crie um Projeto: Abra o Dev-C++ e vá em Arquivo -> Novo -> Projeto. Escolha "Console Application" e "Projeto C". Dê um nome ao projeto (ex: Biblioteca) e salve.
+Sistema de gerenciamento de biblioteca desenvolvido como atividade MAPA para a disciplina de Linguagem e Técnicas de Programação. O projeto foi desenvolvido em **linguagem C**, utilizando bibliotecas padrão, manipulação de arquivos de texto para persistência de dados, e uma estrutura modularizada com arquivos de cabeçalho (`.h`) e código-fonte (`.c`) separados por responsabilidade.
 
-Adicione os Arquivos:
+O sistema permite o cadastro de livros e usuários, além do controle de empréstimos e devoluções, simulando o gerenciamento do acervo de uma biblioteca.
 
-O Dev-C++ criará um main.c padrão. Substitua o conteúdo dele pelo código do main.c fornecido acima.
+## Como começar:
 
-No painel do projeto (geralmente à esquerda), clique com o botão direito no nome do projeto e selecione Adicionar ao Projeto.
+Para testar este projeto localmente, você precisará de um compilador C (como o GCC) instalado e configurado no seu sistema.
 
-Selecione TODOS os outros arquivos .c e .h (livro.c, livro.h, usuario.c, usuario.h, etc.).
+1.  Primeiro, clone este repositório para a sua máquina local:
+    ```bash
+    git clone https://github.com/mauricio-alves/mapa-biblioteca.git
+    ```
+2.  Navegue até a pasta do projeto:
+    ```bash
+    cd mapa-biblioteca
+    ```
+3.  Compile o projeto:
+      ```bash
+      gcc src/*.c -Iinclude -o biblioteca.exe
+      ```
+4.  Execute o programa:
+    ```powershell
+    ./biblioteca.exe
+    ```
 
-Compile e Execute:
+**Obs.:** Para usuários de Windows, é recomendado ter o **MinGW-w64** instalado (através do [MSYS2](https://www.msys2.org/)) para ter acesso ao comando `gcc`. Certifique-se de que o caminho para o executável (`gcc.exe`) foi adicionado ao PATH do sistema.
 
-Pressione a tecla F11 (ou vá em Executar -> Compilar e Executar).
+## Manual do Usuário
 
-O Dev-C++ irá compilar todos os arquivos .c juntos e gerar um executável.
+Ao executar o programa, você será apresentado a um menu principal com 4 seções principais e a opção de sair.
 
-Uma janela de console aparecerá com o menu principal do sistema.
+### 1. Gestão de Livros
+Neste menu, você pode gerenciar todo o acervo da biblioteca.
+- **Cadastrar Livro:** Adiciona um novo livro ao sistema. Serão solicitados dados como Código, Título, Autor, Editora, Ano e Número de exemplares.
+- **Pesquisar Livro:** Permite buscar por um livro específico no acervo através do seu Código, Título ou Autor.
+- **Listar todos os Livros:** Exibe uma lista formatada de todos os livros cadastrados no sistema, mostrando suas informações principais e a quantidade de exemplares disponíveis.
 
-Como Compilar e Executar (Usando GCC no Terminal - Linux/Mac/Windows com MinGW):
-Navegue até a Pasta: Abra um terminal e use o comando cd para navegar até a pasta onde você salvou todos os arquivos.
+### 2. Gestão de Usuários
+Esta seção é dedicada ao gerenciamento dos usuários da biblioteca.
+- **Cadastrar Usuário:** Adiciona um novo usuário. O sistema pedirá dados como Matrícula, Nome Completo, Curso e Telefone. A data de cadastro é gerada automaticamente.
+- **Pesquisar Usuário:** Permite buscar por um usuário através de sua Matrícula ou Nome.
+- **Listar todos os Usuários:** Mostra uma lista com a Matrícula, Nome e Curso de todos os usuários cadastrados.
 
-Compile: Execute o seguinte comando:
+### 3. Gestão de Empréstimos
+Aqui você pode controlar a entrada e saída de livros.
+- **Realizar Empréstimo:** Cria um novo registro de empréstimo. O sistema solicitará a matrícula do usuário e o código do livro. Uma verificação é feita para garantir que o usuário existe e que há exemplares do livro disponíveis. A data de devolução é calculada para 7 dias após o empréstimo.
+- **Realizar Devolução:** Finaliza um empréstimo ativo. Você precisará informar o código do empréstimo. Ao ser devolvido, o exemplar do livro volta a ficar disponível no acervo.
+- **Renovar Empréstimo:** Permite estender o prazo de um empréstimo ativo por mais 7 dias a partir da data atual. Empréstimos em atraso não podem ser renovados.
+- **Listar Empréstimos Ativos:** Exibe uma lista de todos os livros que estão atualmente emprestados, mostrando o código do empréstimo, o nome do usuário, o título do livro e a data prevista para devolução.
 
-Bash
+### 4. Relatórios
+Esta seção oferece visões administrativas sobre o estado da biblioteca.
+- **Usuários com Empréstimos em Atraso:** Gera um relatório mostrando todos os usuários que não devolveram um livro no prazo estipulado.
 
-gcc main.c livro.c usuario.c emprestimo.c arquivo.c menu.c util.c -o biblioteca.exe
-Execute:
-
-No Windows: .\biblioteca.exe
-
-No Linux/Mac: ./biblioteca.exe
-
-Funcionalidades do Sistema:
-Gestão de Livros: Permite cadastrar novos livros, pesquisá-los por código, título ou autor, e listar todos os livros do acervo.
-
-Gestão de Usuários: Permite cadastrar novos usuários da biblioteca, pesquisá-los por matrícula ou nome, e listar todos os usuários.
-
-Gestão de Empréstimos: O coração do sistema. Permite registrar um empréstimo (vinculando um usuário a um livro), registrar uma devolução, renovar um empréstimo existente e ver uma lista de todos os empréstimos que ainda estão ativos.
-
-Relatórios: Oferece funcionalidades avançadas, como a geração de uma lista de todos os usuários com empréstimos em atraso.
-
-Persistência de Dados: Todos os dados são salvos automaticamente em arquivos .txt quando o programa é fechado e carregados quando ele é iniciado.
-
-Backup Automático: Ao sair do sistema, cópias de segurança dos arquivos de dados (livros.bak, usuarios.bak, emprestimos.bak) são criadas.
+### 0. Sair
+Ao escolher esta opção, o sistema salva todas as alterações feitas (novos livros, usuários, empréstimos e devoluções) nos arquivos `livros.txt`, `usuarios.txt` e `emprestimos.txt` dentro da pasta `data/`. Além disso, uma cópia de segurança (`.bak`) de cada arquivo é criada automaticamente.
