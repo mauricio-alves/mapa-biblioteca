@@ -16,11 +16,15 @@ Para testar este projeto localmente, você precisará de um compilador C (como o
     ```bash
     cd mapa-biblioteca
     ```
-3.  Compile o projeto:
+3.  Crie uma pasta chamada `data` na raiz do projeto. É nesta pasta que os arquivos de livros, usuários e empréstimos serão salvos.
+    ```bash
+    mkdir data
+    ```
+4.  Compile o projeto:
       ```bash
       gcc src/*.c -Iinclude -o biblioteca.exe
       ```
-4.  Execute o programa:
+5.  Execute o programa:
     ```powershell
     ./biblioteca.exe
     ```
